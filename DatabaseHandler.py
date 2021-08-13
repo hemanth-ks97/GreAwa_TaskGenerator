@@ -8,6 +8,7 @@ class DatabaseHandler:
         self.IssuePool = 'https://www.ets.org/gre/revised_general/prepare/analytical_writing/issue/pool'
         self.ArgumentPool = 'https://www.ets.org/gre/revised_general/prepare/analytical_writing/argument/pool'
         self.DBPath = 'database.db'
+        self.connection = self.CreateDB(self.DBPath)
 
     # retrieve data ---------------------
     def RetrieveData(self,type):
@@ -26,7 +27,6 @@ class DatabaseHandler:
         paras.pop(0)
         paras.pop(0)
         questionFrame = ""
-        connection = self.CreateDB(self.DBPath)
         for obj in paras:
             frame = str(obj.text)
             frame.replace("<p>", "")
@@ -35,9 +35,9 @@ class DatabaseHandler:
                 questionFrame += "\n" + frame
                 #store it in database
                 if type == 0:
-                    connection.execute("insert into issues (text) values(?)",(questionFrame,))
+                    self.connection.execute("insert into issues (text) values(?)",(questionFrame,))
                 else:
-                    connection.execute("insert into arguments (text) values(?)",(questionFrame,))
+                    self.connection.execute("insert into arguments (text) values(?)",(questionFrame,))
                 #questionDb.append(questionFrame)   # SHOULD BE CHANGED TO DATABASE.EXECUTE()
                 #reset the questionFrame variable
                 questionFrame = ""
@@ -46,8 +46,17 @@ class DatabaseHandler:
                     questionFrame = frame
                 else:
                     questionFrame += "\n" + frame
-        connection.commit()
+        self.connection.commit()
     # -----------------------------------
+
+    def PullRandom(self,type):
+        cursor = self.connection.cursor()
+        if type == 0:
+            cursor.execute("SELECT * FROM issues ORDER BY RANDOM() LIMIT 1")
+            return cursor.fetchall()
+        else:
+            cursor.execute("SELECT * FROM arguments ORDER BY RANDOM() LIMIT 1")
+            return cursor.fetchall()            
 
     # Create DB and tables---------------
     def CreateDB(self, path):
@@ -80,6 +89,5 @@ class DatabaseHandler:
     # ------------------------------------
 
     def CloseDb(self):
-        connection = self.CreateDB(self.DBPath)
-        connection.close()
+        self.connection.close()
     
