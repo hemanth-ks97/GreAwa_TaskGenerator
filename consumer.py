@@ -14,8 +14,10 @@ if(operation == "1"):
     issueTask = dbh.PullRandom(0)
     argumentTask = dbh.PullRandom(1)
     print("###########################################################")
+    print("ISSUE TASK")
     print(issueTask)
     print("###########################################################")
+    print("ARGUMENT TASK")
     print(argumentTask)
 
 dbh.CloseDb()
