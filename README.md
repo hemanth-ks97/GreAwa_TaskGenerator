@@ -3,7 +3,7 @@ Scrapes the official GRE Analytical Writing question bank and stores it on a loc
 
 # UPDATE
 
-ETS has deprecated the links to the question bank and have replaced it with pdf files. The Web Scraping abilities of the project is hence compromised. However, a copy of the database file retrieved in 2021 by the Web Scraper containing 300+ essay prompts has been uploaded to the git.
+ETS has deprecated the links to the question bank and have replaced it with pdf files. The Web Scraping abilities of the project is hence compromised. However, a copy of the database file retrieved in 2021 by the Web Scraper containing 300+ essay prompts has been uploaded to the repo.
 
 # STEPS TO USE
 
